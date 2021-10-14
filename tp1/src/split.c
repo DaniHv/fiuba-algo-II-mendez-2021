@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include "split.h"
 
+/*
+ * Pre: El puntero string deberá ser un puntero válido (no NULL)
+ * Post: devolverá la cantidad de carácteres pedidos encontrados en el string recibido.
+ */
 size_t contar_caracteres(const char* string, char caracter) {
     size_t caracteres = 0;
     size_t i = 0;
@@ -17,6 +21,11 @@ size_t contar_caracteres(const char* string, char caracter) {
     return caracteres;
 }
 
+/*
+ * Pre: El puntero string deberá ser un puntero válido (no NULL)
+ * Post: Copiará el contenido del string que se encuentra dentro de la posición solicitada
+ *       (considerando la división entre cada separador), y la devolverá en un string nuevo.
+ */
 char* separar_string(const char* string, char separador, size_t posicion) {
     size_t i = 0;
     size_t actual_posicion = 0;
@@ -47,6 +56,11 @@ char* separar_string(const char* string, char separador, size_t posicion) {
     return substring;
 }
 
+/*
+ * Pre: -
+ * Post: Dividirá el string recibido separando por el caracter separador indicado,
+ *       y devolverá un array de strings con el resultado.
+ */
 char** split(const char* string, char separador) {
     if (!string) return NULL;
 

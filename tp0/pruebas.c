@@ -8,14 +8,14 @@ void dadoUnStringNULL_devuelveNULL(){
     pa2m_afirmar(split(NULL, ',')==NULL, "Split de un string NULL resulta en NULL");
 }
 
-void dadoUnStringVacío_devuelveUnVectorConElStringYUnNULL(){
+void dadoUnStringVacio_devuelveUnVectorConElStringYUnNULL(){
     char** vector = NULL;
     char* string = "";
 
-    pa2m_afirmar((vector = split(string,','))!= NULL, "Puedo hacer split de un string vacío");
+    pa2m_afirmar((vector = split(string,','))!= NULL, "Puedo hacer split de un string vacio");
 
     pa2m_afirmar(vector[0] != string, "El primer elemento del vector no es el string original");
-    pa2m_afirmar(strcmp(vector[0],string)==0, "El primer elemento del vector es un string vacío");
+    pa2m_afirmar(strcmp(vector[0],string)==0, "El primer elemento del vector es un string vacio");
     pa2m_afirmar(vector[1] == NULL, "El segundo elemento del vector es NULL");
 
     free(vector[0]);
@@ -74,10 +74,10 @@ void dadoUnStringLargoSeparadoPorEspacios_devuelveUnVectorConLosStringsSeparados
 
     pa2m_afirmar((vector = split(string,' '))!= NULL, "Puedo hacer split de un string muy grande");
 
-    pa2m_afirmar(vector && vector[0] && vector[0][0]=='?', "El primer elemento del vector no es nulo ni un vector vacío");
-    pa2m_afirmar(vector && vector[1] && vector[1][0]=='?', "El segundo elemento del vector no es nulo ni un vector vacío");
-    pa2m_afirmar(vector && vector[2] && vector[2][0]=='?', "El tercer elemento del vector no es nulo ni un vector vacío");
-    pa2m_afirmar(vector && vector[3] && vector[3][0]=='?', "El cuarto elemento del vector no es nulo ni un vector vacío");
+    pa2m_afirmar(vector && vector[0] && vector[0][0]=='?', "El primer elemento del vector no es nulo ni un vector vacio");
+    pa2m_afirmar(vector && vector[1] && vector[1][0]=='?', "El segundo elemento del vector no es nulo ni un vector vacio");
+    pa2m_afirmar(vector && vector[2] && vector[2][0]=='?', "El tercer elemento del vector no es nulo ni un vector vacio");
+    pa2m_afirmar(vector && vector[3] && vector[3][0]=='?', "El cuarto elemento del vector no es nulo ni un vector vacio");
     pa2m_afirmar(vector && vector[4]==NULL, "El quinto elemento del vector es NULL");
 
     free(vector[0]);
@@ -90,9 +90,9 @@ void dadoUnStringLargoSeparadoPorEspacios_devuelveUnVectorConLosStringsSeparados
 
 int main(){
 
-    pa2m_nuevo_grupo("Split de strings vacíos o nulos");
+    pa2m_nuevo_grupo("Split de strings vacios o nulos");
     dadoUnStringNULL_devuelveNULL();
-    dadoUnStringVacío_devuelveUnVectorConElStringYUnNULL();
+    dadoUnStringVacio_devuelveUnVectorConElStringYUnNULL();
 
     pa2m_nuevo_grupo("Split de strings separados por comas");
     dadoUnStringSeparadoPorComasYUnaComa_devuelveUnVectorConLosStringsDelimitadosPorLasComas();
