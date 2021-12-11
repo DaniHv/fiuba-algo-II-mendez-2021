@@ -16,6 +16,29 @@ typedef struct dato {
 } dato_t;
 
 /*
+ * Struct como auxiliar que contiene la información necesaria para ser usada en transformador_de_recorrido,
+ * con la intención de no reescribir una funcionalidad de recorrido de las listas de la tabla, aprovechando
+ * la primitiva de iteración nativa de lista.
+ */
+typedef struct transformador_de_recorrido_aux {
+    hash_t* hash;
+    bool (*funcion_recorrido_hash)(hash_t* hash, const char* clave, void* aux);
+    void* aux;
+    bool continuar;
+} transformador_de_recorrido_aux_t;
+
+/*
+ * Struct Auxiliar para ser usado en rehash_elemento,
+ * conteniendo la información necesaria para él.
+ * Es implementado con el objetivo de aprovechar el iterador
+ * interno en el recorrido de las listas.
+ */
+typedef struct rehash_elemento_aux {
+    lista_t** tabla;
+    size_t tamanio;
+} rehash_elemento_aux_t;
+
+/*
  * Pre: Debe recibir una clave válida.
  * Post: Devuelve el valor hash correspondiente a la clave recibida,
  *       haciendo uso del cálculo en size_t del valor en ASCII de la primera
@@ -96,17 +119,6 @@ bool comparar_clave_datos(void* dato1, void* dato2) {
 }
 
 /*
- * Struct Auxiliar para ser usado en rehash_elemento,
- * conteniendo la información necesaria para él.
- * Es implementado con el objetivo de aprovechar el iterador
- * interno en el recorrido de las listas.
- */
-typedef struct rehash_elemento_aux {
-    lista_t** tabla;
-    size_t tamanio;
-} rehash_elemento_aux_t;
-
-/*
  * Pre: El elemento recibido debe ser de tipo dato_t* y el aux de tipo rehash_elemento_aux*
  * Post: Tomará el dato recibido y lo insertará en la tabla recibida en el auxiliar.
  *       Devuelve false en caso de error, o true en caso contrario.
@@ -135,6 +147,8 @@ int rehashear_tabla(hash_t* hash) {
 
     size_t nuevo_tamanio = hash->tamanio_tabla * 2;
     lista_t** nueva_tabla = calloc(nuevo_tamanio, sizeof(lista_t*));
+
+    if (!nueva_tabla) return ERROR;
 
     rehash_elemento_aux_t aux = {
         .tabla = nueva_tabla,
@@ -277,18 +291,6 @@ void hash_destruir(hash_t* hash) {
     free(hash->tabla);
     free(hash);
 }
-
-/*
- * Struct como auxiliar que contiene la información necesaria para ser usada en transformador_de_recorrido,
- * con la intención de no reescribir una funcionalidad de recorrido de las listas de la tabla, aprovechando
- * la primitiva de iteración nativa de lista.
- */
-typedef struct transformador_de_recorrido_aux {
-    hash_t* hash;
-    bool (*funcion_recorrido_hash)(hash_t* hash, const char* clave, void* aux);
-    void* aux;
-    bool continuar;
-} transformador_de_recorrido_aux_t;
 
 /*
  * Pre: El elemento recibido debe ser de tipo dato_t*, y aux debe ser transformador_de_recorrido_aux_t*
